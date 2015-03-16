@@ -9,7 +9,7 @@ import (
 
 	"mailchamps/api"
 
-	"github.com/sqs/mux"
+	"github.com/gorilla/mux"
 )
 
 func main() {
