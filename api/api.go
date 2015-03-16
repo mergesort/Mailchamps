@@ -57,7 +57,7 @@ func AddNewsletterSubscriber(rw http.ResponseWriter, req *http.Request, input Su
 
 	api := gochimp.NewChimp(apiKey, true)
 
-	log.Println("Adding subscriber " + input.Username + "/" + input.Email)
+	log.Println("Adding subscriber: " + input.Username + "/" + input.Email)
 
 	mergeVars := make(map[string]interface{})
 	mergeVars["USERNAME"] = input.Username
@@ -83,7 +83,7 @@ func AddNewsletterSubscriber(rw http.ResponseWriter, req *http.Request, input Su
 	email, err := api.ListsSubscribe(subscriber)
 
 	if err != nil {
-		log.Fatal("An error occurred subscribing "+input.Username+" to the list: ", err)
+		log.Fatal("An error occurred subscribing "+input.Username+" to the list: ", err.Error())
 	}
 
 	output := SubscriptionOutput{
@@ -94,5 +94,5 @@ func AddNewsletterSubscriber(rw http.ResponseWriter, req *http.Request, input Su
 
 	output.SendSubscriptionResponse(rw)
 
-	log.Println("Sent response")
+	log.Println("Subscriber response sent")
 }
