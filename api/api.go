@@ -15,12 +15,15 @@ import (
 )
 
 ////////////////////////////////////////////////////////////////////////////////
-// JSON marshalling
+// Subscription Input
 
 type SubscriptionInput struct {
 	Username string `json:"username"`
 	Email    string `json:"email"`
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// Subscription Output
 
 type SubscriptionOutput struct {
 	Email      string `json:"email"`
