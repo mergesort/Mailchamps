@@ -30,21 +30,12 @@ func main() {
 		var input api.SubscriptionInput
 		err := decoder.Decode(&input)
 
-		if len(input.Email) == 0 || len(input.Username) == 0 {
-			var message string
-			if len(input.Email) == 0 && len(input.Username) == 0 {
-				message = "Incorrect parameters"
-			} else if len(input.Email) == 0 {
-				message = "Missing email"
-			} else if len(input.Username) == 0 {
-				message = "Missing username"
-			}
+		if len(input.Email) == 0 {
 			incorrectParametersOutput := api.SubscriptionOutput{
 				Email:      input.Email,
-				Message:    message,
+				Message:    "Missing email",
 				StatusCode: 409,
 			}
-
 			incorrectParametersOutput.SendSubscriptionResponse(writer)
 		} else if err != nil {
 			errorOutput := api.SubscriptionOutput{

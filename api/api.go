@@ -18,17 +18,22 @@ import (
 // Subscription Input
 
 type SubscriptionInput struct {
-	Username string `json:"username"`
 	Email    string `json:"email"`
+	Username string `json:"username"`
+	Twitter  string `json:"twitter"`
+	Name     string `json:"full_name"`
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Subscription Output
 
 type SubscriptionOutput struct {
-	Email      string `json:"email"`
 	Message    string `json:"message"`
 	StatusCode int    `json:"status"`
+	Email      string `json:"email"`
+	Username   string `json:"username"`
+	Twitter    string `json:"twitter"`
+	Name       string `json:"full_name"`
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -49,6 +54,8 @@ func (output SubscriptionOutput) SendSubscriptionResponse(rw http.ResponseWriter
 // API
 
 func AddNewsletterSubscriber(rw http.ResponseWriter, req *http.Request, input SubscriptionInput) {
+	log.Println("Adding subscriber: " + input.Email + "/" + input.Username + "/" + input.Name + "/" + input.Twitter)
+
 	apiKey := os.Getenv("MAILCHIMP_API_KEY")
 
 	if len(apiKey) == 0 {
@@ -57,10 +64,10 @@ func AddNewsletterSubscriber(rw http.ResponseWriter, req *http.Request, input Su
 
 	api := gochimp.NewChimp(apiKey, true)
 
-	log.Println("Adding subscriber: " + input.Username + "/" + input.Email)
-
 	mergeVars := make(map[string]interface{})
 	mergeVars["USERNAME"] = input.Username
+	mergeVars["TWITTER"] = input.Twitter
+	mergeVars["NAME"] = input.Twitter
 
 	email := gochimp.Email{
 		Email: input.Email,
