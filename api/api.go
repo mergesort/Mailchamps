@@ -89,13 +89,19 @@ func AddNewsletterSubscriber(rw http.ResponseWriter, req *http.Request, input Su
 
 	email, err := api.ListsSubscribe(subscriber)
 
+	var message string
+	var statusCode int
 	if err != nil {
-		log.Fatal("An error occurred subscribing "+input.Username+" to the list: ", err.Error())
+		message = err.Error()
+		statusCode = 400
+	} else {
+		message = input.Username + " has been subscribed"
+		statusCode = 200
 	}
 
 	output := SubscriptionOutput{
-		Message:    input.Username + " has been subscribed",
-		StatusCode: 200,
+		Message:    message,
+		StatusCode: statusCode,
 		Email:      input.Email,
 		Username:   input.Username,
 		Twitter:    input.Twitter,
