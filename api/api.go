@@ -67,7 +67,6 @@ func AddNewsletterSubscriber(rw http.ResponseWriter, req *http.Request, input Su
 	mergeVars := make(map[string]interface{})
 	mergeVars["USERNAME"] = input.Username
 	mergeVars["TWITTER"] = input.Twitter
-	mergeVars["NAME"] = input.Name
 
 	email := gochimp.Email{
 		Email: input.Email,
